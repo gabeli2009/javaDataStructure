@@ -1,0 +1,20 @@
+package com.data.gabeli.search;
+
+public class DataItem {
+	private int mId;
+	public String mName;
+	
+
+	private static int S_ID = 0;
+	public DataItem(String aName){
+		synchronized(DataItem.class){
+			mId = S_ID;
+			S_ID++;
+		}
+		mName = aName;
+	}
+	
+	public int getmId() {
+		return mId;
+	}
+}

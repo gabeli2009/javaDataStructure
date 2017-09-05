@@ -1,0 +1,32 @@
+package com.data.gabeli.sort;
+
+public class BubbleSort{
+
+	  public static int[] bubbleSort(int[] array){
+	    for(int i = 0;i < array.length;i++){                      
+	      for(int j = 0; j < array.length-i-1;j++){
+	        if(array[j] > array[j+1]){            
+	          int temp = array[j]; 
+	          array[j] = array[j+1]; 
+	          array[j+1] = temp;  
+	        }
+	      }
+	      System.out.println("╣з"+(i+1)+"лкеепР");
+	      for(int k = 0;k < array.length;k++){
+	        System.out.print(array[k]+" ");
+	      }
+	      System.out.println();
+	    }
+	    return array;
+	  }
+
+
+	  /**
+	   * @param args
+	   */
+	  public static void main(String[] args){
+	    int[] array = {7,3,9,5,6,8,1};
+	    bubbleSort(array);
+	  }
+
+	}

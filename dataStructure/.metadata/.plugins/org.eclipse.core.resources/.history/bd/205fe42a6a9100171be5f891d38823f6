@@ -1,0 +1,77 @@
+package com.data.gabeli.sort.quick;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
+import com.data.gabeli.sort.SortItem;
+
+/***
+ * 快速排序（Quicksort）是对冒泡排序的一种改进。 快速排序由C. A. R.
+ * Hoare在1962年提出。它的基本思想是：通过一趟排序将要排序的数据分割成独立的两部分，
+ * 其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，
+ * 以此达到整个数据变成有序序列。
+ * 
+ * @author gabeli
+ */
+public class QuickItemSort {
+
+	public static void main(String[] args) {
+		ArrayList<SortItem> _testData = new ArrayList<SortItem>();
+		Random _r = new Random();
+		for (int j = 0; j < 200; j++) {
+			SortItem _aItem = new SortItem(j + "asdfa", _r.nextInt(300));
+			_testData.add(_aItem);
+		}
+		
+		for(SortItem _item :_testData){
+			System.out.print( _item.getmValue()+"\t");
+		}
+		System.out.println(" .");
+		System.out.println("************************");
+		
+		QuickItemSort _qs = new QuickItemSort( );
+		_qs.quickSort(_testData);
+		for(SortItem _item :_testData){
+			System.out.print( _item.getmValue()+"\t");
+		}
+		System.out.println(" .");
+		System.out.println("************************");
+		Collections.sort(_testData);
+		for(SortItem _item :_testData){
+			System.out.print( _item.getmValue()+"\t");
+		}
+		System.out.println(" .");
+	}
+
+	
+	public void quickSort( List<SortItem> aListItem){
+		int _length =aListItem.size();
+		int i=0,j=_length-1;
+		while(true){
+		i=0;j=_length-1;
+		SortItem _keyItem = aListItem.get(0);
+		int _keyItemValue = _keyItem.getmValue();
+		for(  ;j<0;j--){
+			SortItem _nextItem = aListItem.get(j);
+			if(_keyItemValue>_nextItem.getmValue()){
+				aListItem.set(i, _nextItem);
+				aListItem.set(j, _keyItem);
+			}
+		}
+		for ( ;i<_length-1;i++){
+			SortItem _nextItem = aListItem.get(i);
+			if(_keyItemValue<_nextItem.getmValue()){
+				aListItem.set(j, _nextItem);
+				aListItem.set(i, _keyItem);
+			}
+		}
+		if(aListItem.get(i).getmValue()==aListItem.get(j).getmValue()){
+			break;
+		}
+		}
+	 
+		
+	}
+}

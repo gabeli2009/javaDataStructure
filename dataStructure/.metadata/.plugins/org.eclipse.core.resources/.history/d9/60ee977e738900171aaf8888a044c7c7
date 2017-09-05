@@ -1,0 +1,25 @@
+package com.photo.getfilemtime;
+
+import android.provider.MediaStore.Images.ImageColumns;
+
+public class PhotoProviderList {
+private static final String[] IMAGE_PROJECTION = 	new String[]{
+	ImageColumns._ID,
+	ImageColumns.DATA,
+	ImageColumns.DATE_TAKEN,
+	ImageColumns.SIZE,
+};
+
+private static final int INDEX_ID= getStringIndex(ImageColumns._ID);
+
+private static int getStringIndex(String field){
+	int i = 0;
+	for(String tmp:IMAGE_PROJECTION){
+		if(tmp.equals(field)){
+			return i;
+		}
+		i++;
+	}
+	return -1;
+}
+}

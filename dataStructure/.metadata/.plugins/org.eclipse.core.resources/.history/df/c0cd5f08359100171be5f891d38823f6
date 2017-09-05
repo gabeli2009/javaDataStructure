@@ -1,0 +1,57 @@
+package com.data.gabeli.sort.bubble;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
+import com.data.gabeli.sort.SortItem;
+
+public class BubbleItemSort {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ArrayList<SortItem> _testData = new ArrayList<SortItem>();
+		int _xxcnt = 50;
+		Random _r = new Random();
+		for (int j = 0; j < 200; j++) {
+//			for (int i = 0; i < _xxcnt; i++) {
+				SortItem _aItem = new SortItem(j + "asdfa", _r.nextInt(300));
+				_testData.add(_aItem);
+//			}
+		}
+		
+		for(SortItem _item :_testData){
+			System.out.print( _item.getmValue()+"\t");
+		}
+		System.out.println("......***......");
+		BubbleItemSort _BubbleItemSort = new BubbleItemSort();
+		_BubbleItemSort.bubbleSort(_testData);
+		for(SortItem _item :_testData){
+			System.out.print( _item.getmValue()+"\t");
+		}
+		
+		System.out.println("......***......");
+		Collections.sort(_testData);
+		for(SortItem _item :_testData){
+			System.out.print( _item.getmValue()+"\t");
+		}
+	}
+	
+	public void bubbleSort(List<SortItem> aList){
+		int _listCnt = aList.size();
+		for (int i = 0 ;i<_listCnt ;i++){
+			for (int j = 0 ;j<_listCnt-1 ;j++){
+				SortItem _probeItem = aList.get(j);
+				SortItem _nextItem = aList.get(j+1);
+				if(_probeItem.getmValue()>_nextItem.getmValue()){
+//					SortItem _swapItem = _probeItem;
+					aList.set(j, _nextItem);
+					aList.set(j+1, _probeItem);
+				 
+				}
+			}
+		}
+	}
+
+}

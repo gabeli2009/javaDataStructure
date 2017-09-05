@@ -1,0 +1,99 @@
+package com.data.gabeli.search;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import com.data.struct.binary.Item;
+
+public class BinarySearch {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ArrayList<DataItem>  _testData = new ArrayList<DataItem>();
+		int _xxcnt=50;
+		Random _r = new Random();
+		for (int j = 0; j < 200; j++) {
+			for (int i = 0; i < _xxcnt; i++) {
+				DataItem _aItem = new DataItem(i + "asdfa" + _r.nextInt());
+				_testData.add(_aItem);
+				//System.out.print(_aItem.getmId() +"\t");
+			}
+//			System.out.println("end \t");
+		}
+		
+		BinarySearch __xxlist = new BinarySearch(_testData);
+		
+		DataItem _item = __xxlist.binarySearchTarget2(_testData,342);
+		System.out.println("result :: "+_item.getmKeyId()+"  "+_item.mName);
+		
+		_item = __xxlist.binarySearchTarget(_testData,999);
+		System.out.println("result :: "+_item.getmKeyId()+"  "+_item.mName);
+		
+		int _itemIndex = __xxlist.find(_testData,_item);
+		_item = _testData.get(_itemIndex);
+		System.out.println("result :: "+_item.getmKeyId()+"  "+_item.mName);
+	}
+
+	List<DataItem> mItemList;
+	public BinarySearch(List<DataItem> aList){
+		mItemList = aList;
+	}
+	
+	public DataItem get(int aIndex){
+		if(aIndex>0 && aIndex<mItemList.size()){
+			return mItemList.get(aIndex);
+		}
+		return null;
+	}
+	
+	
+	public static int find(List<DataItem> keys, DataItem target) {
+		int high = keys.size();
+		int low = -1;
+		while (high - low > 1) {
+			int probe = (low + high) >>> 1;
+			if (keys.get(probe).compareTo(target) > 0)
+				high = probe;
+			else
+				low = probe;
+		}
+		if (low == -1 || keys.get(low).compareTo(target) != 0)
+			return -1;
+		else
+			return low;
+	}
+	
+	
+	public DataItem binarySearchTarget2(List<DataItem> aItemList, int aTarget) {
+		int high = aItemList.size();
+		int low = -1;
+		while (high - low > 1) {
+			int probe = (low + high) >>> 1;
+			if (aItemList.get(probe).getmKeyId() > aItemList.get(aTarget).getmKeyId())
+				high = probe;
+			else
+				low = probe;
+		}
+		if (low == -1 || (aItemList.get(low).getmKeyId() != aItemList.get(aTarget).getmKeyId()))
+			return null;// -1;
+		else
+			return aItemList.get(low);// low;
+	}
+	public DataItem binarySearchTarget(List<DataItem> aItemList,int aTargetKey){
+		int high = aItemList.size();
+		int low = -1;
+		while (high - low > 1) {
+			int probe = (low + high) >>> 1;
+			if (aItemList.get(probe).compareTo(aItemList.get( aTargetKey)) > 0)
+				high = probe;
+			else
+				low = probe;
+		}
+		if (low == -1 || aItemList.get(low).compareTo(aItemList.get( aTargetKey)) != 0)
+			return null;//-1;
+		else
+			return aItemList.get(low);//low;
+	}
+	
+}

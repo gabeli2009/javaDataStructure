@@ -1,0 +1,116 @@
+package com.data.gabeli.sort.quick;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
+import com.data.gabeli.sort.SortItem;
+
+/***
+ * 快速排序（Quicksort）是对冒泡排序的一种改进。 快速排序由C. A. R.
+ * Hoare在1962年提出。它的基本思想是：通过一趟排序将要排序的数据分割成独立的两部分，
+ * 其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，
+ * 以此达到整个数据变成有序序列。
+ * 
+ * @author gabeli
+ */
+public class QuickItemSort {
+
+	public static void main(String[] args) {
+		ArrayList<SortItem> _testData = new ArrayList<SortItem>();
+		Random _r = new Random();
+		for (int j = 0; j < 200; j++) {
+			SortItem _aItem = new SortItem(j + "asdfa", _r.nextInt(300));
+			_testData.add(_aItem);
+		}
+		
+		for(SortItem _item :_testData){
+			System.out.print( _item.getmValue()+"\t");
+		}
+		System.out.println(" .");
+		System.out.println("************************");
+		
+		QuickItemSort _qs = new QuickItemSort( );
+		_qs.quickSort(_testData,0 ,_testData.size()-1);
+		for(SortItem _item :_testData){
+			System.out.print( _item.getmValue()+"\t");
+		}
+		System.out.println(" .");
+		System.out.println("************************");
+		Collections.sort(_testData);
+		for(SortItem _item :_testData){
+			System.out.print( _item.getmValue()+"\t");
+		}
+		System.out.println(" .");
+	}
+
+	
+	public void quickSort(List<SortItem> aListItem,int low,int high){
+		SortItem _lItem = aListItem.get(low);
+		SortItem _hItem = aListItem.get(high);
+		int _l = low;
+		int _h = high;
+		while(_lItem.getmValue()<_hItem.getmValue()){
+			SortItem _llItem = aListItem.get(_l);
+			SortItem _hhItem = aListItem.get(_h);
+			for(;_h>_l;_h--){
+				_hhItem = aListItem.get(_h);
+				if(_hhItem.getmValue()<_lItem.getmValue()){
+					aListItem.set(_h, _lItem);
+					aListItem.set(_l, _hhItem);
+				}
+			}
+			
+			 _hhItem = aListItem.get(_h);
+			
+			for(;_l>_h;_l++){
+				 _llItem = aListItem.get(_l);
+				if(_hhItem.getmValue()<_lItem.getmValue()){
+					aListItem.set(_h, _lItem);
+					aListItem.set(_l, _hhItem);
+				}
+			}
+		}
+	}
+	
+	public void quickSort( List<SortItem> aListItem){
+		int _length =aListItem.size();
+		int i=0,j=_length-1;
+		while(true){
+
+		SortItem _keyItem = aListItem.get(i);
+		int _keyItemValue = _keyItem.getmValue();
+		SortItem _iItem = aListItem.get(i);
+		for(  ;j>0;j--){
+			SortItem _nextItem = aListItem.get(j);
+			if(_keyItemValue>_nextItem.getmValue()){
+				aListItem.set(i, _nextItem);
+				aListItem.set(j, _iItem);
+				break;
+			}
+		}
+		SortItem _jItem = aListItem.get(j);
+		for ( ;i<_length-1;i++){
+			SortItem _nextItem = aListItem.get(i);
+		
+			if(_keyItemValue<_nextItem.getmValue()){
+				aListItem.set(j, _nextItem);
+				aListItem.set(i, _jItem);
+				break;
+			}
+
+		}
+//		if(aListItem.get(i).getmValue()==aListItem.get(j).getmValue()){
+//			break;
+//		}
+		
+	if(i==j){
+			break;
+		}
+
+		}
+	 
+		
+	}
+}

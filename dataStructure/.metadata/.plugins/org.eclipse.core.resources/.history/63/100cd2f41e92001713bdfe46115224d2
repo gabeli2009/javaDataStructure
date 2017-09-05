@@ -1,0 +1,10 @@
+package com.data.j2novice.sort.select;
+
+public class SelectItemSort {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

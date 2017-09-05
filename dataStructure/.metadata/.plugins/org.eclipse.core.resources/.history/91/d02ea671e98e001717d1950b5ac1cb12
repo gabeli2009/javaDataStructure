@@ -1,0 +1,64 @@
+package com.data.gabeli.search;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class BinarySearch {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ArrayList<DataItem>  _testData = new ArrayList<DataItem>();
+		int _dataCnt = 10000;
+		int _xxcnt=50;
+		Random _r = new Random();
+		for (int j = 0; j < 200; j++) {
+			for (int i = 0; i < _xxcnt; i++) {
+				DataItem _aItem = new DataItem(i + "asdfa" + _r.nextInt());
+				System.out.print(_aItem.getmId() +"\t");
+			}
+			System.out.println("end \t");
+		}
+	}
+
+	List<DataItem> mItemList;
+	public BinarySearch(List<DataItem> aList){
+		mItemList = aList;
+	}
+	
+	private DataItem findMe(DataItem aItem ,DataItem aLeft ,DataItem aRight) {
+//		int _dataLength = mItemList.size();
+		DataItem _left = aLeft;//mItemList.get(0);
+		DataItem _right = aRight;//mItemList.get(_dataLength-1);
+		int probe = (_left.getmId()+_right.getmId())>>1;
+			DataItem _probeItem = mItemList.get(probe);
+			if(aItem.getmId()>_probeItem.getmId()){
+				_left = _probeItem;
+			
+			}else if(aItem.getmId()<_probeItem.getmId()){
+				_right = _probeItem;
+			}else{
+				return _probeItem;
+			}
+
+			return findMe(aItem ,_left,_right);
+	}
+	
+	public DataItem BinarySearch(DataItem aItem ){
+		
+		int _dataLength = mItemList.size();
+		DataItem _left = mItemList.get(0);
+		DataItem _right = mItemList.get(_dataLength-1);
+		return findMe(aItem,_left,_right);
+//		int probe = (_left.getmId()+_right.getmId())>>1;
+//			DataItem _probeItem = mItemList.get(probe);
+//			if(aItem.getmId()>_probeItem.getmId()){
+//				_left = _probeItem;
+//			}else if(aItem.getmId()<_probeItem.getmId()){
+//				_right = _probeItem;
+//			}else{
+//				return _probeItem;
+//			}
+//		return null;
+	}
+}

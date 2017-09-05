@@ -1,0 +1,25 @@
+package com.gabeli.search.link;
+
+ 
+
+public class MyBinSearchTree <E extends Comparable<E>> {
+//¸ù
+	private TreeNode<E> root;
+	public MyBinSearchTree(){}
+//	¶þ²æÊ÷²éÕÒ
+	public  boolean search(E e){
+		TreeNode<E> current = root;
+		while (current != null){
+			if(e.compareTo(current.element)<0){
+				current = current.left;
+			}else if (e.compareTo(current.element)>0){
+				current = current.right;
+			}else {
+				return true;
+			}
+			
+		}
+		return false;
+	}
+	
+}

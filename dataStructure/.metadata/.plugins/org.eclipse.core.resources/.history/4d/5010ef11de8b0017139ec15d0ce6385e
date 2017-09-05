@@ -1,0 +1,67 @@
+package com.photo.getfilemtime;
+
+import java.io.File;
+
+import android.content.ContentResolver;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore.Images;
+import android.provider.MediaStore.Images.ImageColumns;
+import android.util.Log;
+
+public class PhotoProviderList {
+	
+	private Uri ImgUri = Images.Media.EXTERNAL_CONTENT_URI;
+	private static final String[] IMAGE_PROJECTION = new String[] { ImageColumns._ID, ImageColumns.DATA,
+			ImageColumns.DATE_TAKEN, ImageColumns.SIZE, };
+
+	private static final int INDEX_ID = getStringIndex(ImageColumns._ID);
+	private static final int INDEX_DATA = getStringIndex(ImageColumns.DATA);
+	private static final int INDEX_DATE_TAKEN = getStringIndex(ImageColumns.DATE_TAKEN);
+	private static final int INDEX_SIZE = getStringIndex(ImageColumns.SIZE);
+
+	private static int getStringIndex(String field) {
+		int i = 0;
+		for (String tmp : IMAGE_PROJECTION) {
+			if (tmp.equals(field)) {
+				return i;
+			}
+			i++;
+		}
+		return -1;
+	}
+	public void query(Context aContext){
+		
+		query(aContext.getContentResolver(),ImgUri,IMAGE_PROJECTION);
+	}
+	public void query(ContentResolver aResolver,Uri aUri,String[] aProjection){
+		
+		Cursor  _imgCursor = null;
+		_imgCursor = aResolver.query(aUri, aProjection,null,null, ImageColumns.DATE_TAKEN + " ASC");
+		//½µÐò " DESC");// selection, selectionArgs, sortOrder)
+		if(null!=_imgCursor){
+			_imgCursor.moveToFirst();
+			int _currentImgCnt = 0;
+			for(;!_imgCursor.isAfterLast();_imgCursor.moveToNext()){
+				String _imgPath = _imgCursor.getString(INDEX_DATA);
+				long _imgTakenTimeInDb = _imgCursor.getLong(INDEX_DATE_TAKEN);
+				long _imgFileSizeInDb = _imgCursor.getLong(INDEX_SIZE);
+				StringBuffer _sb = new StringBuffer();
+				_sb.append("path: ");
+				_sb.append(_imgPath).append(" ").append(_imgTakenTimeInDb).append(" ").append(_imgFileSizeInDb);
+					Log.i("gabeli_img", _sb.toString());
+					_sb.setLength(0);
+					
+					long _timeInFile = PhotoUtil.getExifDateTime(_imgPath);
+					_sb.append("time:");
+					_sb.append(PhotoUtil.getFormatTime(_imgTakenTimeInDb)).append(" ");
+					_sb.append(PhotoUtil.getFormatTime(_timeInFile));
+					Log.i("gabeli_img", _sb.toString());
+					
+					File _fxx = new File(_imgPath);
+					long _fileTime = _fxx.lastModified();
+			}
+		}
+	}
+}

@@ -1,0 +1,7 @@
+package com.photo.getfilemtime;
+
+import android.media.ExifInterface;
+
+public class MediaItem {
+	int XX =ExifInterface.TAG_DATETIME;
+}

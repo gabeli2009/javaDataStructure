@@ -1,0 +1,5 @@
+package com.java2novice.junit.samples.test;
+
+public class MyEvenOddTest {
+
+}

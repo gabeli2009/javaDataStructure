@@ -1,0 +1,12 @@
+package com.data.gabeli.search;
+
+public class DataItem {
+	int mId;
+	String name;
+	
+	static int S_ID = 0;
+	public DataItem(){
+		mId = S_ID;
+		S_ID++;
+	}
+}

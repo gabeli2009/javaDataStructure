@@ -1,0 +1,39 @@
+package com.data.struct.binary;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+
+public class BinarySearch {
+	public static final int N = 50000;
+
+	public static void main(String[] args) {
+		List vals = new ArrayList<Item>();
+		Item _tItem;
+		Random r = new Random();
+		int currval = 0;
+		for (int i = 0; i < N; i++) {
+			_tItem = new Item();
+			_tItem.name = "" + currval;
+			// 获得随机数，这样就可以确保是数组是升序
+			currval += r.nextInt(10) + 1;
+		}
+
+		// 获得当前时间
+		long start = System.currentTimeMillis();
+		for (int i = 0; i < N; i++) {
+			// //二分查找，获得index,此方法要求list为升序，如果没有对列表进行排序，则结果是不确定的
+			// int index=Finder.find(vals, vals[i]);
+			// //判断找出来的位置是否为对应的位置，
+			// if(index!=i){
+			// System.out.println(vals[i-1]+"** **"+vals[i]+ " index ::"+i);
+		}
+
+		// 算出所花时间
+		long _costTime = System.currentTimeMillis() - start;
+
+		System.out.println("cost time :: " + _costTime);
+	}
+
+}

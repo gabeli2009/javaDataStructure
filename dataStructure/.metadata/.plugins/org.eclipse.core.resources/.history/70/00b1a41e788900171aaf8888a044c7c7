@@ -1,0 +1,50 @@
+package com.photo.getfilemtime;
+
+import java.io.IOException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
+import android.media.ExifInterface;
+
+public class MediaItem {
+	String XX =ExifInterface.TAG_DATETIME;
+	
+	public static long getExifDateTime(String path){
+		ExifInterface exif = null;
+		try {
+			exif = new ExifInterface(path);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(null!=exif){
+			
+		}
+		return 0 ;
+	}
+	public static final TimeZone CURRENT_TIME_ZONE = TimeZone.getDefault();
+	private static long exifDateTime(ExifInterface exif){
+		String dateTimeString = exif.getAttribute(ExifInterface.TAG_DATETIME);
+		if(null == dateTimeString){
+			return 0;
+		}
+		ParsePosition pos = new ParsePosition(0);
+		try{
+			SimpleDateFormat _sdf = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
+			_sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+			Date dateTime = _sdf.parse(dateTimeString,pos);
+			if(null==dateTime){
+				return 0;
+			}
+			long result = dateTime.getTime();
+			long offset = CURRENT_TIME_ZONE.getOffset(result);
+			result -= offset;
+			return offset;
+		}catch(Exception e){
+			
+		}
+		return 0;
+	}
+}

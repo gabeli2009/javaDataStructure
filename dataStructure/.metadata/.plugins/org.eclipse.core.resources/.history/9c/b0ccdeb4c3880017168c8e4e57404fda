@@ -1,0 +1,14 @@
+package com.data.struct.binary;
+
+public class Item  {
+	static int INDEX = 0;
+	int mIndex;
+	String name;
+	
+	public Item(){
+		synchronized(Item.class){
+			INDEX++;
+		}
+	}
+	
+}

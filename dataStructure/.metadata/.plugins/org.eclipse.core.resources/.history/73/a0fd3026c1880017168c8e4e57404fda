@@ -1,0 +1,6 @@
+package com.data.struct.binary;
+
+public class Item {
+	int mIndex;
+	String name;
+}

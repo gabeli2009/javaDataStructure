@@ -1,0 +1,113 @@
+package com.data.gabeli.search;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import com.data.struct.binary.Item;
+
+public class BinarySearch {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ArrayList<DataItem>  _testData = new ArrayList<DataItem>();
+		int _xxcnt=50;
+		Random _r = new Random();
+		for (int j = 0; j < 200; j++) {
+			for (int i = 0; i < _xxcnt; i++) {
+				DataItem _aItem = new DataItem(i + "asdfa" + _r.nextInt());
+				_testData.add(_aItem);
+				//System.out.print(_aItem.getmId() +"\t");
+			}
+			System.out.println("end \t");
+		}
+		
+		BinarySearch __xxlist = new BinarySearch(_testData);
+		
+		DataItem _item = __xxlist.BinarySearch(__xxlist.get(3194));
+		System.out.println("result :: "+_item.getmId()+"  "+_item.mName);
+		
+		__xxlist.binarySearchTarget(_testData,999);
+		System.out.println("result :: "+_item.getmId()+"  "+_item.mName);
+	}
+
+	List<DataItem> mItemList;
+	public BinarySearch(List<DataItem> aList){
+		mItemList = aList;
+	}
+	
+	public DataItem get(int aIndex){
+		if(aIndex>0 && aIndex<mItemList.size()){
+			return mItemList.get(aIndex);
+		}
+		return null;
+	}
+	private DataItem findMe(DataItem aItem ,DataItem aLeft ,DataItem aRight) {
+//		int _dataLength = mItemList.size();
+		DataItem _left = aLeft;//mItemList.get(0);
+		DataItem _right = aRight;//mItemList.get(_dataLength-1);
+		int probe = (_left.getmId()+_right.getmId())>>1;
+			DataItem _probeItem = mItemList.get(probe);
+			if(aItem.getmId()>_probeItem.getmId()){
+				_left = _probeItem;
+			
+			}else if(aItem.getmId()<_probeItem.getmId()){
+				_right = _probeItem;
+			}else{
+				return _probeItem;
+			}
+
+			return findMe(aItem ,_left,_right);
+	}
+	
+	
+	public static int find(ArrayList<DataItem> keys, DataItem target) {
+		int high = keys.size();
+		int low = -1;
+		while (high - low > 1) {
+			int probe = (low + high) >>> 1;
+			if (keys.get(probe).compareTo(target) > 0)
+				high = probe;
+			else
+				low = probe;
+		}
+		if (low == -1 || keys.get(low).compareTo(target) != 0)
+			return -1;
+		else
+			return low;
+	}
+	
+	public DataItem binarySearchTarget(List<DataItem> aItemList,int target){
+		int high = aItemList.size();
+		int low = -1;
+		while (high - low > 1) {
+			int probe = (low + high) >>> 1;
+			if (aItemList.get(probe).compareTo(aItemList.get( target)) > 0)
+				high = probe;
+			else
+				low = probe;
+		}
+		if (low == -1 || aItemList.get(low).compareTo(aItemList.get( target)) != 0)
+			return null;//-1;
+		else
+			return aItemList.get(low);//low;
+	}
+	
+	public DataItem BinarySearch(DataItem aTarget ){
+		
+		int _dataLength = mItemList.size();
+		DataItem _left = mItemList.get(0);
+		DataItem _right = mItemList.get(_dataLength-1);
+		return findMe(aTarget,_left,_right);
+//		int probe = (_left.getmId()+_right.getmId())>>1;
+//			DataItem _probeItem = mItemList.get(probe);
+//			if(aItem.getmId()>_probeItem.getmId()){
+//				_left = _probeItem;
+//			}else if(aItem.getmId()<_probeItem.getmId()){
+//				_right = _probeItem;
+//			}else{
+//				return _probeItem;
+//			}
+//		return null;
+	}
+}

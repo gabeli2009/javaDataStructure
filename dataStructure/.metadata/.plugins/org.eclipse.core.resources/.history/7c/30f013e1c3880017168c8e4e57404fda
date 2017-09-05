@@ -1,0 +1,15 @@
+package com.data.struct.binary;
+
+public class Item {
+	private static int S_ID = 0;
+	int mIndex;
+	String name;
+
+	public Item() {
+		synchronized (Item.class) {
+			mIndex = S_ID;
+			S_ID++;
+		}
+	}
+
+}

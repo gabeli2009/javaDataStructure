@@ -1,0 +1,185 @@
+package com.data.gabeli.sort.quick;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
+import com.data.gabeli.sort.SortItem;
+
+/***
+ * 快速排序（Quicksort）是对冒泡排序的一种改进。 快速排序由C. A. R.
+ * Hoare在1962年提出。它的基本思想是：通过一趟排序将要排序的数据分割成独立的两部分，
+ * 其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，
+ * 以此达到整个数据变成有序序列。
+ *  
+ *  
+ *  
+ *  
+ *  快速排序使用分治法（Divide and conquer）策略来把一个序列（list）分为两个子序列（sub-lists）。
+ 
+步骤为：
+1.从数列中挑出一个元素，称为"基准"（pivot），
+2.重新排序数列，所有比基准值小的元素摆放在基准前面，所有比基准值大的元素摆在基准后面（相同的数可以到任一边）。在这个分区结束之后，该基准就处于数列的中间位置。这个称为分区（partition）操作。
+3.递归地（recursively）把小于基准值元素的子数列和大于基准值元素的子数列排序。
+ 
+递归到最底部时，数列的大小是零或一，也就是已经排序好了。这个算法一定会结束，因为在每次的迭代（iteration）中，它至少会把一个元素摆到它最后的位置去。
+
+ *  function quicksort(q)
+     var list less, pivotList, greater
+     if length(q) ≤ 1 {
+         return q
+     } else {
+         select a pivot value pivot from q
+         for each x in q except the pivot element
+             if x < pivot then add x to less
+             if x ≥ pivot then add x to greater
+         add pivot to pivotList
+         return concatenate(quicksort(less), pivotList, quicksort(greater))
+     }
+
+
+
+ procedure quicksort(a, left, right)
+     if right > left
+         select a pivot value a[pivotIndex]
+         pivotNewIndex := partition(a, left, right, pivotIndex)
+         quicksort(a, left, pivotNewIndex-1)
+         quicksort(a, pivotNewIndex+1, right)
+         
+         
+  function partition(a, left, right, pivotIndex)
+     pivotValue := a[pivotIndex]
+     swap(a[pivotIndex], a[right]) // 把pivot移到結尾
+     storeIndex := left
+     for i from left to right-1
+         if a[i] <＝ pivotValue
+             swap(a[storeIndex], a[i])
+             storeIndex := storeIndex + 1
+     swap(a[right], a[storeIndex]) // 把pivot移到它最後的地方
+     return storeIndex
+        
+
+ * @author gabeli
+ */
+public class QuickItemSort {
+
+	public static void main(String[] args) {
+		ArrayList<SortItem> _testData = new ArrayList<SortItem>();
+		ArrayList<SortItem> _testData2 = new ArrayList<SortItem>();
+		Random _r = new Random();
+		for (int j = 0; j < 200; j++) {
+			SortItem _aItem = new SortItem(j + "asdfa", _r.nextInt(300));
+			_testData.add(_aItem);
+			_testData2.add(_aItem);
+		}
+		
+		for(SortItem _item :_testData){
+			System.out.print( _item.getmValue()+"\t");
+		}
+		System.out.println(" .");
+		System.out.println("************************");
+		
+		QuickItemSort _qs = new QuickItemSort( );
+		_qs.quickSort(_testData);
+		for(SortItem _item :_testData){
+			System.out.print( _item.getmValue()+"\t");
+		}
+		System.out.println(" .");
+		System.out.println("************************");
+		Collections.sort(_testData2);
+		for(SortItem _item :_testData2){
+			System.out.print( _item.getmValue()+"\t");
+		}
+		System.out.println(" .");
+	}
+//pivot 轴
+	
+	public int partition(List<SortItem> aListItem,int aStart,int aEnd ){
+		int pivotIndex = aEnd;
+		SortItem _pivotItem = aListItem.get(pivotIndex);
+		SortItem _leftItem = null;
+		SortItem _rightItem = null;
+		int _left = aStart;
+		int _right = aEnd - 1;
+		_rightItem = aListItem.get(_left);
+		while (_left < _right) {
+			while (aListItem.get(_left).getmValue() < _pivotItem.getmValue() && _left < _right)
+				_left++;
+			while (aListItem.get(_right).getmValue() >= _pivotItem.getmValue() && _left < _right)
+				_right--;
+			_leftItem = aListItem.get(_left);
+			_rightItem = aListItem.get(_right);
+			aListItem.set(_left, _rightItem);
+			aListItem.set(_right, _leftItem);
+		}
+		_leftItem = aListItem.get(_left);
+		if (_leftItem.getmValue() >=  _pivotItem.getmValue()) {
+			aListItem.set(_left, _pivotItem);
+			aListItem.set(aEnd, _leftItem);
+		} else {
+			_left++;
+		}
+		return _left;
+	}
+	
+	public void quickSort(List<SortItem> aListItem){
+		if(null != aListItem)
+		{
+			int _cnt = aListItem.size();
+			if(aListItem.size()>1){
+				quickSort(aListItem,0,_cnt-1);
+			}
+		}
+	}
+	private void quickSort(List<SortItem> aListItem ,int aStart ,int aEnd){
+		if(aEnd>aStart){
+			int pivotNewIndex = partition(aListItem, aStart, aEnd);
+			quickSort(aListItem, aStart, pivotNewIndex - 1);
+			quickSort(aListItem, pivotNewIndex + 1, aEnd);
+//			SortItem _mid  = aListItem.get( aEnd);
+//			SortItem _leftItem =  null; 
+//			SortItem _rightItem =  null;
+//			int _left = aStart;
+//			int _right = aEnd-1;
+//			_rightItem = aListItem.get(_left);
+//		    while(_left < _right){ 
+//				while (aListItem.get(_left).getmValue() < _mid.getmValue() && _left < _right)
+//					_left++;
+//				while (aListItem.get(_right).getmValue() >= _mid.getmValue() && _left < _right)
+//					_right--;
+//				_leftItem = aListItem.get(_left);
+//				_rightItem = aListItem.get(_right);
+//				aListItem.set(_left, _rightItem);
+//				aListItem.set(_right, _leftItem);
+//		    }
+//		    _leftItem =   aListItem.get( _left);
+//		    SortItem _end =   aListItem.get( aEnd);
+//		    if(_leftItem.getmValue()>=_end.getmValue()){
+//		    	aListItem.set(_left, _end);aListItem.set(aEnd, _leftItem);
+//		    }else{
+//		    	_left++;
+//		    }
+//			quickSort(aListItem, aStart, _left-1);
+//			quickSort(aListItem, _left+1,aEnd);
+		} 
+	}
+//	以下是C的代码。
+//	template<typename T>
+//	void quick_sort_recursive(T arr[], int start, int end) {
+//		if (start >= end) return;
+//		T mid = arr[end];
+//		int left = start, right = end - 1;
+//		while (left < right) {
+//			while (arr[left] < mid && left < right) left++;
+//			while (arr[right] >= mid && left < right) right--;
+//			std::swap(arr[left], arr[right]);
+//		}
+//		if (arr[left] >= arr[end])
+//			std::swap(arr[left], arr[end]);
+//		else
+//			left++;
+//		quick_sort_recursive(arr, start, left - 1);
+//		quick_sort_recursive(arr, left + 1, end);
+//	}
+}

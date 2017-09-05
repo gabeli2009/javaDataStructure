@@ -1,0 +1,61 @@
+package com.gabeli.search.link;
+
+ 
+
+public class MyBinSearchTree <E extends Comparable<E>> {
+//根
+	private TreeNode<E> root;
+	public MyBinSearchTree(){}
+//	二叉树查找
+	public  boolean search(E e){
+		TreeNode<E> current = root;
+		while (current != null){
+			if(e.compareTo(current.element)<0){
+				current = current.left;
+			}else if (e.compareTo(current.element)>0){
+				current = current.right;
+			}else {
+				return true;
+			}
+			
+		}
+		return false;
+	}
+	
+	public boolean insert(E e){
+		if( null == root){
+			createNewNode(e);
+		}else{
+			 // 否则就从根节点开始遍历，直到找倒合适的父节点
+		     TreeNode<E> parent = null;
+		     TreeNode<E> current = root;
+		     while(null!=current){
+		    	 if(e.compareTo(current.element)<0){
+			    	 parent = current;
+			    	 current = current.left;
+		    	 }else if(e.compareTo(current.element)>0){
+			    	 parent = current;
+			    	 current = current.right;
+		    	 }else{
+		    		 return false;
+		    	 }
+
+		     }
+		     //插入
+		     if(e.compareTo(parent.element)<0){
+		    	 parent.left= createNewNode(e);
+		     }else{
+		    	 parent.right= createNewNode(e);
+		     }
+		}
+		return true;
+	}
+	
+	
+	 // 创建新的节点
+    protected TreeNode<E> createNewNode(E e) {
+        return new TreeNode(e);
+    }
+
+ 
+}
